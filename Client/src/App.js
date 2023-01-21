@@ -1,10 +1,24 @@
-import React from 'react'
+import React from 'react';
+import styles from "./styles";
+import {Layout,Image,Typography} from "antd";
+import Home from './Components/Home';
 
+const {Title} = Typography;
+const {Header, Footer} = Layout;
 const App = () => {
   return (
-    <div>
+    <Layout styles={styles.layout}>
+      <Header style={styles.header}>
+        <Image styles ={styles.image} 
+        width="45" preview="false" 
+        src=""></Image>
+        &nbsp;
+        <Title styles={styles.title}>Instaverse</Title>
+      </Header>
+      <Home/>
+      <Footer style={styles.footer}>2023, @Instaverse</Footer>
       
-    </div>
+    </Layout>
   )
 }
 
