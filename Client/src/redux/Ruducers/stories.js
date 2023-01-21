@@ -1,9 +1,9 @@
-const storiesReducer = (state, action) => {
+const storiesReducer = (state = [], action) => {
     switch (action.type) {
         case "FETCH_ALL_STORIES":
             return state;
         case "FETCH_STORY":
-            return state
+            return action.payload;
         default:
             return state;
     }
