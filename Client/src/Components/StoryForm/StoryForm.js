@@ -1,21 +1,27 @@
 import React from 'react';
+import {useDispatch} from "react-redux"
 import styles from "./styles"
-import {Card, Form ,Input, Typography, Buttom} from "antd";
+import {Card, Form ,Input, Typography, Button} from "antd";
+import FileBase64 from "react-file-base64";
+import { createStory, updateStory } from '../../redux/Actions/storiesActions';
 
-const {Title} = Typography;
+const {Title,Text} = Typography;
 
 const StoryForm = () => {
     const[form] = Form.useForm();
+    const dispatch = useDispatch();
 
-    const onSubmit = () => {
-
+    const onSubmit = (formValues) => {
+        // console.log(formValues)
+        // dispatch(updateStory(id, formValues));
+        dispatch(createStory(formValues))
     }
     return (
         <Card 
-            styles={styles.formCard}
+            style={styles.formCard}
             title={
-                <Title level={4} styles= {styles.formTitle}>
-
+                <Title align="center" level={4} style= {styles.formTitle}>
+                   <Text>Create Your Story</Text> 
                 </Title>
             }    
         >
@@ -45,6 +51,25 @@ const StoryForm = () => {
                             minRows:2, maxRows:6
                         }}
                     />
+                </Form.Item>
+                <Form.Item name="image" label="Image" rules={[{ "required":true}]}>
+                    <FileBase64
+                        type="file"
+                        multiple={false}
+                        onDone={(e)=>{
+                            form.setFieldsValue({ image: e.base64})
+                        }}
+                    />
+                </Form.Item>
+                <Form.Item
+                    wrapperCol={{
+                        span:16,
+                        offset:6
+                    }}
+                >
+                    <Button type="primary" block htmlType="submit">
+                        Share
+                    </Button>
                 </Form.Item>
             </Form>
         </Card>

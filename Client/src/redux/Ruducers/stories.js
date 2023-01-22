@@ -1,9 +1,11 @@
 const storiesReducer = (state = [], action) => {
     switch (action.type) {
         case "FETCH_ALL_STORIES":
-            return state;
-        case "FETCH_STORY":
-            return action.payload;
+            return [...state, ...action.payload];
+        case "CREATE_STORY":
+            return [...state, action.payload];
+        case "UPDATE_STORY":
+            return state.map(story => story._id === action.payload.id ? action.payload : story)   
         default:
             return state;
     }

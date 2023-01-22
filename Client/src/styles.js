@@ -1,7 +1,6 @@
 const styles = {
     layout:{
         minHeight: '100vh',
-        border:"1px solid red",
     },
     header:{
         color:"#fff",
