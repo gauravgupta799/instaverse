@@ -1,4 +1,4 @@
-import React from 'react';
+import React, {useEffect} from 'react';
 import styles from "./styles";
 import {Row, Col, Spin} from "antd";
 import Story from '../Story';

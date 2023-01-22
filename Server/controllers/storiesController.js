@@ -37,4 +37,15 @@ const updateStory = async(req, res)=>{
   }
 }
 
-export { getStories,createStory, updateStory }
+const deleteStory = async(req, res)=>{
+  const Id = req.params.id;
+  console.log(Id)
+  try {
+    await Story.findByIdAndDelete(Id);
+    res.status(200).json({message:"Story deleted successfully."});
+  } catch (error) {
+    console.log(error.message)
+  }
+}
+
+export { getStories,createStory, updateStory, deleteStory }

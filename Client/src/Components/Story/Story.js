@@ -1,14 +1,19 @@
 import React,{useState} from 'react';
+import {useDispatch} from "react-redux";
 import styles from "./styles";
 import {Card, Tooltip, Typography,Image,Row,Col} from "antd";
 import { EditOutlined, DeleteTwoTone, HeartTwoTone} from "@ant-design/icons"
 import moment from "moment";
+import { deleteStory  } from '../../redux/Actions/storiesActions';
+
 
 const {Meta} = Card;
 const {Link,Paragraph, Text} = Typography;
 
 const Story = ({story, setSelectedId}) => {
+    const dispatch = useDispatch();
     const [expand, setExpand] = useState(true);
+    
     return (
         <>
         <div className="site-card-wrapper">
@@ -26,7 +31,7 @@ const Story = ({story, setSelectedId}) => {
                         <EditOutlined  onClick={()=>setSelectedId(story._id)}/>
                     </Tooltip>,
                     <Tooltip placement="top" title="Delete" color="red">
-                        <DeleteTwoTone  twoToneColor="red"  onClick={()=>{}}/>
+                        <DeleteTwoTone  twoToneColor="red"  onClick={()=> dispatch(deleteStory(story._id))}/>
                     </Tooltip>
                 ]}
             >

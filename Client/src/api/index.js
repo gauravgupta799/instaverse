@@ -6,7 +6,7 @@ const url ="http://localhost:8700/stories";
 export const fetchStories = async() => axios.get(url);
 export const createStory = async(story) =>axios.post(`${url}/createStory`, story)
 export const updateStory = async(id, story) => axios.patch(`${url}/${id}`, story);
-
+export const deleteStory = async(id) => axios.delete(`${url}/${id}`);
 
 
 // export const fetchStories = async () => api.get("/stories");
