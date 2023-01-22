@@ -26,8 +26,8 @@ const updateStory = async(req, res)=>{
   const {id:_id} = req.params;
   const story = req.body;
   try {
-    if(!mongoose.Types.isValid(_id)){
-      return res.status(404).json({message:"This id doesn't belong to any story."})
+    if(!mongoose.Types.ObjectId.isValid(_id)){
+      return res.status(404).json({message:"This Id doesn't belong to any story."})
     }
     const updatedStory = await Story.findByIdAndUpdate(_id, story,
      { new: true });

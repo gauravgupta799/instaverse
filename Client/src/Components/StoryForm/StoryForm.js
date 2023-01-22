@@ -1,5 +1,5 @@
-import React from 'react';
-import {useDispatch} from "react-redux"
+import React,{useEffect} from 'react';
+import {useDispatch, useSelector} from "react-redux"
 import styles from "./styles"
 import {Card, Form ,Input, Typography, Button} from "antd";
 import FileBase64 from "react-file-base64";
@@ -7,21 +7,36 @@ import { createStory, updateStory } from '../../redux/Actions/storiesActions';
 
 const {Title,Text} = Typography;
 
-const StoryForm = () => {
+const StoryForm = ({selectedId, setSelectedId}) => {
+    const story = useSelector((state)=> selectedId ? state?.stories?.find(story => story._id === selectedId) : null); 
     const[form] = Form.useForm();
     const dispatch = useDispatch();
 
     const onSubmit = (formValues) => {
         // console.log(formValues)
-        // dispatch(updateStory(id, formValues));
-        dispatch(createStory(formValues))
+        selectedId ? dispatch(updateStory(selectedId, formValues)) :
+        dispatch(createStory(formValues));
+        resetFormFields();
     }
+
+    useEffect(()=> {
+        if(story){
+            form.setFieldsValue(story)
+        }
+    }, [story, form]);
+
+    const resetFormFields = () => {
+        form.resetFields();
+        setSelectedId(null);
+    }
+
     return (
         <Card 
             style={styles.formCard}
             title={
                 <Title align="center" level={4} style= {styles.formTitle}>
-                   <Text>Create Your Story</Text> 
+                   {/* <Text>Create Your Story</Text>  */}
+                   {selectedId ? "Editing" : "Share"} a story
                 </Title>
             }    
         >
@@ -68,9 +83,27 @@ const StoryForm = () => {
                     }}
                 >
                     <Button type="primary" block htmlType="submit">
-                        Share
+                        {selectedId ? "UPDATE" : "SHARE"}
+                    </Button> 
+                </Form.Item>
+                { selectedId  && (
+                    <Form.Item
+                    wrapperCol={{
+                        span:16,
+                        offset:6
+                    }}
+                >
+                    <Button type="primary"
+                     block 
+                     htmlType="button"
+                     danger
+                     onClick={resetFormFields}
+                     >
+                        Discard
                     </Button>
                 </Form.Item>
+                )
+                }
             </Form>
         </Card>
     )
