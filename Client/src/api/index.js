@@ -7,7 +7,7 @@ export const fetchStories = async() => axios.get(url);
 export const createStory = async(story) =>axios.post(`${url}/createStory`, story)
 export const updateStory = async(id, story) => axios.patch(`${url}/${id}`, story);
 export const deleteStory = async(id) => axios.delete(`${url}/${id}`);
-
+export const likeStory = async(id) => axios.patch(`${url}/${id}/likeStory`);
 
 // export const fetchStories = async () => api.get("/stories");
 // export const createStory = async (story) => api.post("/stories", story);

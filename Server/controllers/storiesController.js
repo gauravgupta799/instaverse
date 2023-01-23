@@ -48,4 +48,22 @@ const deleteStory = async(req, res)=>{
   }
 }
 
-export { getStories,createStory, updateStory, deleteStory }
+const likeStory = async(req, res)=>{
+  const { id } = req.params;
+  try {
+    const story = await Story.findById(id);
+    const updatedStory = await Story.findByIdAndUpdate(id, 
+      {
+        likes:story.likes + 1
+      },
+      {
+        new: true
+      }
+    );
+    res.status(200).json(updatedStory);
+  } catch (error) {
+    console.log(error.message)
+  }
+}
+
+export { getStories,createStory, updateStory, deleteStory,likeStory }
