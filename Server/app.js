@@ -20,7 +20,7 @@ app.get('/',(req,res) => {
 })
 
 app.use("/stories", storyRoute);
-
+// app.use("/auth", authentication)
 
 
 mongoose.connect(process.env.MONGO_URL, {
