@@ -1,13 +1,15 @@
 import axios from "axios";
 
-const url ="http://localhost:8700/stories";
+const url ="http://localhost:8700";
 // const api = axios.create({baseURL:url});
 
-export const fetchStories = async() => axios.get(url);
-export const createStory = async(story) =>axios.post(`${url}/createStory`, story)
-export const updateStory = async(id, story) => axios.patch(`${url}/${id}`, story);
-export const deleteStory = async(id) => axios.delete(`${url}/${id}`);
-export const likeStory = async(id) => axios.patch(`${url}/${id}/likeStory`);
+export const fetchStories = async() => axios.get(`${url}/stories`);
+export const createStory = async(story) =>axios.post(`${url}/stories/createStory`, story)
+export const updateStory = async(id, story) => axios.patch(`${url}/stories/${id}`, story);
+export const deleteStory = async(id) => axios.delete(`${url}/stories/${id}`);
+export const likeStory = async(id) => axios.patch(`${url}/stories/${id}/likeStory`);
+export const signup = async(values) => axios.post(`${url}/auth`, values)
+export const login = async(values) => axios.post(`${url}/auth`, values)
 
 // export const fetchStories = async () => api.get("/stories");
 // export const createStory = async (story) => api.post("/stories", story);

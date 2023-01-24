@@ -6,6 +6,7 @@ import dotenv from "dotenv";
 const PORT = process.env.PORT || 8700;
 const app = express();
 import storyRoute from './routes/stories.js';
+import userRoute from './routes/users.js';
 
 
 dotenv.config();
@@ -20,7 +21,7 @@ app.get('/',(req,res) => {
 })
 
 app.use("/stories", storyRoute);
-// app.use("/auth", authentication)
+app.use("/auth", userRoute)
 
 
 mongoose.connect(process.env.MONGO_URL, {

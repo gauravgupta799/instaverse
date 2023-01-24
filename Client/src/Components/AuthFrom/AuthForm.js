@@ -1,18 +1,27 @@
 import React,{useState} from 'react';
 import styles from './styles';
+import {useNavigate} from "react-router-dom";
+import {useDispatch} from "react-redux";
 import {Form, Input, Button, Card, Layout, Typography } from "antd"
 import {UserOutlined, LockOutlined,MailOutlined} from "@ant-design/icons";
+import { login, signup} from '../../redux/Actions/authentication';
 
 
 const {Title} = Typography;
 
-
 const AuthForm = () => {
     const [isLogin , setIsLogin] = useState(true);
     // const user = null;
+    const navigate = useNavigate();
+    const dispatch = useDispatch();
     const [form] = Form.useForm();
-    const onSubmit = () => {
 
+    const onSubmit = (formValues) => {
+        if(isLogin) {
+            dispatch(login(formValues, navigate))
+        }else{
+            dispatch(signup(formValues, navigate))
+        }
     }
     const switchMode = () => {
         setIsLogin((prevIsLogin) => !prevIsLogin)
@@ -89,7 +98,7 @@ const AuthForm = () => {
                 <Button htmlType='submit' typeof='primary'>
                     {isLogin ? "Log In" : "Join"}
                 </Button>
-                <span style={{margin:"0px 10px 30px 0px"}}>Or</span>
+                <span style={{margin:"0px 10px 30px 20px"}}> Or</span>
                 <Button type='link' onClick={switchMode}>
                     { isLogin ? "Register now" : "Have an account?"}
                 </Button>
