@@ -3,6 +3,7 @@ import {useDispatch, useSelector} from "react-redux"
 import styles from "./styles"
 import {Card, Form ,Input, Typography, Button} from "antd";
 import FileBase64 from "react-file-base64";
+import {Link} from "react-router-dom"
 import { createStory, updateStory } from '../../redux/Actions/storiesActions';
 
 const {Title,Text} = Typography;
@@ -11,11 +12,12 @@ const StoryForm = ({selectedId, setSelectedId}) => {
     const story = useSelector((state)=> selectedId ? state?.stories?.find(story => story._id === selectedId) : null); 
     const[form] = Form.useForm();
     const dispatch = useDispatch();
+    const user = JSON.parse(localStorage.getItem('profile'));
+    const username = user?.result?.username;
 
     const onSubmit = (formValues) => {
-        // console.log(formValues)
         selectedId ? dispatch(updateStory(selectedId, formValues)) :
-        dispatch(createStory(formValues));
+        dispatch(createStory({...formValues, username}));
         resetFormFields();
     }
 
@@ -29,13 +31,26 @@ const StoryForm = ({selectedId, setSelectedId}) => {
         form.resetFields();
         setSelectedId(null);
     }
+    
+    if(!user){
+        <Card style={styles.formCard}>
+            <Title level={4}>
+                <span style={styles.formTitle}>Welcome To Instavers</span><br/>
+                <span>Please
+                 <Link to="/auth">Login</Link> or 
+                  <Link to="/auth">Register</Link> 
+                 for sharing instant moments
+                 or ideas.
+                </span>
+            </Title>
+        </Card>
+    }
 
     return (
         <Card 
             style={styles.formCard}
             title={
                 <Title align="center" level={4} style= {styles.formTitle}>
-                   {/* <Text>Create Your Story</Text>  */}
                    {selectedId ? "Editing" : "Share"} a story
                 </Title>
             }    
@@ -48,9 +63,9 @@ const StoryForm = ({selectedId, setSelectedId}) => {
                 size="middle"
                 onFinish={onSubmit}
             >
-                <Form.Item name="username" label="Username" rules ={[{ "required":true}]}>
+                {/* <Form.Item name="username" label="Username" rules ={[{ "required":true}]}>
                     <Input allowClear />
-                </Form.Item>
+                </Form.Item> */}
                 <Form.Item name="caption" label="Caption"  rules ={[{ "required":true}]}>
                     <Input.TextArea 
                         allowClear 

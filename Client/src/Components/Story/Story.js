@@ -13,27 +13,34 @@ const {Link,Paragraph, Text} = Typography;
 const Story = ({story, setSelectedId}) => {
     const dispatch = useDispatch();
     const [expand, setExpand] = useState(true);
+    const user = JSON.parse(localStorage.getItem('profile'))
     
+    const cardActions = [
+        <div style={styles.actions}>
+            <Tooltip placement="top" title="Like" color="magenta" 
+            onClick={()=>{}}>
+                <HeartTwoTone twoToneColor="magenta" onClick={()=>dispatch(likeStory(story._id))}/>
+                &nbsp; {story?.likes.length} &nbsp;
+            </Tooltip>
+        </div>,
+        <Tooltip placement="top" title="Edit">
+            <EditOutlined  onClick={()=>setSelectedId(story._id)}/>
+        </Tooltip>,
+        <Tooltip placement="top" title="Delete" color="red">
+            <DeleteTwoTone  twoToneColor="red"  onClick={()=> dispatch(deleteStory(story._id))}/>
+        </Tooltip>
+    ]
+
     return (
         <>
         <div className="site-card-wrapper">
             <Card style={styles.card}
                 cover={<Image src= {story?.image} style={styles.image}/>}
-                actions={[
-                    <div style={styles.actions}>
-                        <Tooltip placement="top" title="Like" color="magenta" 
-                        onClick={()=>{}}>
-                            <HeartTwoTone twoToneColor="magenta" onClick={()=>dispatch(likeStory(story._id))}/>
-                            &nbsp; {story?.likes} &nbsp;
-                        </Tooltip>
-                    </div>,
-                    <Tooltip placement="top" title="Edit">
-                        <EditOutlined  onClick={()=>setSelectedId(story._id)}/>
-                    </Tooltip>,
-                    <Tooltip placement="top" title="Delete" color="red">
-                        <DeleteTwoTone  twoToneColor="red"  onClick={()=> dispatch(deleteStory(story._id))}/>
-                    </Tooltip>
-                ]}
+                actions={
+                    user?.result?._id === story?.userId ?
+                    cardActions : user?.result ?
+                    cardActions.slice(0, 1) : null
+                }
             >
                 <Meta title={story.username} />
                 <Paragraph

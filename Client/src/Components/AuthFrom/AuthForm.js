@@ -10,8 +10,7 @@ import { login, signup} from '../../redux/Actions/authentication';
 const {Title} = Typography;
 
 const AuthForm = () => {
-    const [isLogin , setIsLogin] = useState(true);
-    // const user = null;
+    const [isLogin , setIsLogin] = useState(localStorage.getItem('profile'));
     const navigate = useNavigate();
     const dispatch = useDispatch();
     const [form] = Form.useForm();

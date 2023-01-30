@@ -1,14 +1,31 @@
-import React from 'react';
+import React,{useState, useEffect} from 'react';
 import styles from "./styles.js";
-import {Link} from "react-router-dom";
+import {useDispatch} from "react-redux";
+import {Link,useNavigate, useLocation} from "react-router-dom";
 import {Layout, Image,Typography, Button, Avatar} from "antd";
-
+import { LOGOUT } from '../../constants/actionTypes.js';
 
 const {Title,Text} = Typography;
 const {Header, } = Layout;
 
 const AppBar = () => {
-    const user =null;
+    const dispatch = useDispatch();
+    const navigate = useNavigate();
+    const location = useLocation();
+    const [user, setUser] = useState(JSON.parse(localStorage.getItem('profile')));
+ 
+    useEffect(()=>{
+        const token = user?.token;
+        if(token){
+        }
+        setUser(JSON.parse(localStorage.getItem('profile')))
+    },[location]);
+
+    const logout =()=>{
+        dispatch({type:LOGOUT})
+        setUser(null);
+        navigate("/");
+    }
   return (
     <Header style={styles.header}>
         <Link to ="/">
@@ -29,12 +46,12 @@ const AppBar = () => {
         ) : (
             <div style={styles.userInfo}>
                 <Avatar style={styles.avatar} alt="username" size="large">
-                    G
+                    {user?.result?.username?.charAt(0)?.toUpperCase()}
                 </Avatar>
                 <Title style={styles.title} level={4}>
-                    Gaurav Gupta
+                   {user?.result?.username}
                 </Title>
-                <Button htmlType='button' style={styles.logout}>
+                <Button onClick={logout} htmlType='button' style={styles.logout}>
                     Log Out
                 </Button>
             </div>

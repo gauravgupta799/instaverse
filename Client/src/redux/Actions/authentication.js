@@ -10,7 +10,7 @@ const signup = (formValues, navigate) => async(dispatch)=>{
             type:SIGNUP,
             payload:data
         });
-        navigate("/login")
+        navigate("/auth")
     } catch (error) {
         console.log(error.message);
     }

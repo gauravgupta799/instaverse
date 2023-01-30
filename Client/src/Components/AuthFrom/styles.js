@@ -8,7 +8,5 @@ const styles = {
     card:{
         width:"400px",
     },
-
 } 
-
 export default styles;
